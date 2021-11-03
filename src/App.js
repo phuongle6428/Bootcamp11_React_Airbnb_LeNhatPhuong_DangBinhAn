@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import HomePage from './modules/homePage/pages/HomePage';
 import Login from './modules/auths/pages/Login';
+import Register from './modules/auths/pages/Register';
 
 
 function App() {
@@ -22,9 +23,13 @@ function App() {
               </Route>
             </Switch>
           </Route>
-          <Route>
+          <Route path="/login">
             <Login/>
           </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Router path="/profile"></Router>
         </Switch>
       </Router>
     </div>
