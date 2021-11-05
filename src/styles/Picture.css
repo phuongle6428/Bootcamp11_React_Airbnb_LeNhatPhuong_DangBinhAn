@@ -1,0 +1,20 @@
+.picture {
+  position: relative;
+  display: flex;
+  max-width: 80%;
+  background-size: cover;
+}
+
+.picture__text {
+  position: absolute;
+  padding: 80px;
+  background-color: black;
+  color: white;
+  width: 50%;
+}
+
+.picture > img {
+  z-index: -500;
+  margin-top: -620px;
+  margin-left: 100px;
+}

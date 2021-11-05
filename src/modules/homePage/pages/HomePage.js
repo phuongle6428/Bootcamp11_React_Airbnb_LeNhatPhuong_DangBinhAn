@@ -1,9 +1,16 @@
 import React from 'react'
-
-export default function HomePage() {
+import './../../../styles/HomePage.css';
+import Banner from '../components/Banner'
+import Picture from '../components/Picture'
+import Menu from '../components/Menu'
+function HomePage() {
     return (
-        <div>
-            Hello
+        <div className="homePage">
+            <Banner/>
+            <Picture/>
+            <Menu/>
         </div>
     )
 }
+
+export default HomePage;

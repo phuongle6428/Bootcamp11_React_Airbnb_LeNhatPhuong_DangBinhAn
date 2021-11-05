@@ -1,36 +1,26 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import HomePage from './modules/homePage/pages/HomePage';
-import Login from './modules/auths/pages/Login';
-import Register from './modules/auths/pages/Register';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 
+import Header from './components/Header';
+import Footer from './components/Footer';
+import HomePage from './modules/homePage/pages/HomePage';
 
 function App() {
   return (
     <div className="app">
       <Router>
+        <Header/>
         <Switch>
-          <Route exact path={["/", "/search"]}>
-            <Header />
-            <Switch>
-              <Route path="/search">
-                {/* SearchPage */}
-              </Route>
-              <Route path="/">
-                <HomePage />
-              </Route>
-            </Switch>
+          <Route path="/search">
+            {/* SearchPage */}
           </Route>
-          <Route path="/login">
-            <Login/>
+          <Route path="/">
+            <HomePage/>
           </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Router path="/profile"></Router>
         </Switch>
+        <Footer/>
       </Router>
     </div>
   );

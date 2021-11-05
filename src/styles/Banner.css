@@ -1,0 +1,36 @@
+.banner {
+  background: url("https://links.papareact.com/0fm") center center;
+  height: 500px;
+  position: relative;
+  object-fit: cover;
+}
+
+.banner__info {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 45%;
+  /* justify-content: center;
+  align-items: center; */
+  color: black;
+}
+.banner__info > span {
+  font-weight: 600;
+}
+
+.banner__info .btn__banner {
+  margin-top: 10px;
+  padding: 20px 40px;
+  font-weight: 700;
+  color: #890193;
+  background-color: white;
+  border-radius: 50px;
+}
+
+.banner__info .btn__banner:hover,
+.banner__info .btn__banner:focus {
+  cursor: pointer;
+  background-color: white;
+  box-shadow: 0 0.5em 0.5em -0.4em #ffa260;
+  transform: translateY(-0.25em);
+}
