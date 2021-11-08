@@ -7,6 +7,8 @@ import Register from './modules/auths/pages/Register';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './modules/homePage/pages/HomePage';
+import Profile from './modules/profile/pages/Profile';
+import UserPath from './path/UserPath';
 
 function App() {
   return (
@@ -30,8 +32,9 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Router path="/profile">
-        </Router>
+        <Route path="/user/profile">
+          <Profile />
+        </Route>
       </Switch>
     </Router>
   );

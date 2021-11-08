@@ -16,6 +16,7 @@ const schema = yup.object({
 export default function Login() {
     const dispatch = useDispatch()
     const {userBackData, isLoading, error} = useSelector(state => state.auth)
+    console.log(userBackData)
     const history = useHistory()
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
