@@ -32,9 +32,12 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/user/profile">
+        <UserPath path="/user/profile">
           <Profile />
-        </Route>
+        </UserPath>
+        {/* <Route path="/user/profile">
+          <Profile />
+        </Route> */}
       </Switch>
     </Router>
   );

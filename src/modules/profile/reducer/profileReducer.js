@@ -12,9 +12,9 @@ const profileReducer = (state = initialState, action) => {
         case USERPROFILE_FAILURE:
             return {...state, error: true, isLoading: false};
         case USERPROFILE_REQUEST:
-            return {...state, isLoading: true};
+            return {...state, isLoading: true, error: false};
         case USERPROFILE_SUCCESS:
-            return {...state, isLoading: false, error: false}
+            return {...state, isLoading: false, userDetail: action.payload.data}
         default:
             return state
     }
