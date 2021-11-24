@@ -1,0 +1,29 @@
+.menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  grid-gap: 25px;
+}
+
+.card {
+  position: relative;
+  width: 500px;
+}
+
+.title {
+  font-size: 41px;
+  font-weight: 600;
+}
+
+.text .exp {
+  background-color: white;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.text {
+  position: absolute;
+  color: white;
+  margin-top: 20px;
+  margin-left: 20px;
+}

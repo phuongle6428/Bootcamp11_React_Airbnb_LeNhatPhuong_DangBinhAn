@@ -1,27 +1,52 @@
-import React,{useState} from 'react'
-import './../../../styles/Banner.css'
-import {Button} from '@material-ui/core'
-import {useHistory} from 'react-router-dom'
+import styled from "styled-components";
 
-function Banner() {
-    const history =useHistory();
-    // const [showSearch,setShowSearch]=useState(false);
-    return (
-        <div className="banner">
-            
-            {/* <div className="banner__search">
-                {showSearch && <h1>Search</h1>}
 
-                <Button onClick={()=> setShowSearch(!showSearch)} className="banner__searchButton" variant="outlined">{showSearch ? "Hide" : "Search Date"}</Button>
-            </div> */}
-
-            <div className="banner__info">
-                <span>Bạn chưa biết nên đi đâu? Tuyệt!</span><br />
-                
-                <Button className="btn__banner" onClick={() => history.push('/search')} variant="outlined">Tìm kiếm linh hoạt</Button>
-            </div>
-        </div>
-    )
+export default function Banner() {
+  return (
+    <BannerSection>
+      <span>
+        <h2>Bạn chưa biết nên đi đâu ?Tuyệt.</h2>
+        <a href="#" className="btn btn-dark">
+          {"Tìm kiếm linh hoạt"}
+        </a>
+      </span>
+    </BannerSection>
+  );
 }
 
-export default Banner
+const BannerSection = styled.section`
+  margin-top: 60px;
+  padding: 6rem 3rem;
+  background: url(/images/banner.jpg);
+  background-size: cover;
+  border-radius: 1rem;
+  color: #3f3f1a;
+  span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 40%;
+  }
+  h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+  }
+  .btn.btn-dark {
+    background-color: #3f3f1a;
+    color: #ffffd6;
+  }
+
+  @media (max-width: 36rem) {
+    aspect-ratio: 0.75;
+    background: url(images/banner-sm.jpg);
+    background-size: cover;
+    background-position: center;
+
+    span {
+      align-items: center;
+      text-align: center;
+    }
+  }
+`;
