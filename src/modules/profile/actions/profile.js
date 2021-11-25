@@ -1,4 +1,4 @@
-import axiosClient from "../../../services/axiosClient"
+// import axiosClient from "../../../services/axiosClient"
 import userSevicesAPI from "../../../services/userServicesAPI"
 import { USERPROFILE_FAILURE, USERPROFILE_REQUEST, USERPROFILE_SUCCESS } from "../constant/profile"
 

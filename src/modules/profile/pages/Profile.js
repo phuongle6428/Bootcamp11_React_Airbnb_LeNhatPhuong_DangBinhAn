@@ -1,7 +1,7 @@
 import { Card, CardActions, CardContent, CardMedia, Input, InputLabel, Typography } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import {getuserProfile, postUserAva} from '../actions/profile';
 import avaImg from './../../../image/avatar.png'
 export default function Profile() {
