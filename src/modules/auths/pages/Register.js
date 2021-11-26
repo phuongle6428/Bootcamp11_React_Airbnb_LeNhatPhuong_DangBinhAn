@@ -9,11 +9,11 @@ import { register } from "../actions/auth";
 import { Modal } from "react-bootstrap";
 import { Inbox, AccountBox, VpnKey, Help, DateRange, Home, PhoneAndroid, KeyboardReturn, PermIdentity } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
-import ModalLR from "./ModalLR";
+import ModalLR from "../components/ModalLR";
 const schema = yup.object().shape({
   address: yup.string().required("Địa chỉ không được để trống"),
   gender: yup.string().required("Giới Tính không được để trống"),
-  birdthday: yup.string().required("Ngày sinh không được để trống"),
+  birthday: yup.string().required("Ngày sinh không được để trống"),
   password: yup
     .string()
     .required("Mật khẩu không được để trống")

@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import {Search, Globe, Menu, User} from "react-feather"
-import {useRef,useEffect,useState} from 'react'
+import { Search, Globe, Menu, User } from "react-feather"
+import { useRef, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import DatePicker from "./DatePicker";
 import ThemeToggle from "./ThemeToggle";
 import { useMediaQuery } from "@react-hook/media-query";
+import LoginRegisterMenu from "./LoginRegisterMenu";
 
 
 // import {useHistory} from 'react-router-dom'
@@ -16,215 +17,217 @@ import { useMediaQuery } from "@react-hook/media-query";
 // import Search from './Search'
 
 
-export default function Header({placeholder}) {
-    // const history =useHistory();
+export default function Header({ placeholder }) {
+  // const history =useHistory();
 
-    const router = useRouter();
+  const router = useRouter();
 
-    const navRef = useRef(null);
-    const headerRef = useRef(null);
-    const [scrolled, setScrolled]= useState(false);
-    const [inputFocus, setInputFocus]= useState(false);
-    const primaryLocationRef = useRef(null);
-    const secondaryLocationRef = useRef(null);
+  const navRef = useRef(null);
+  const headerRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [inputFocus, setInputFocus] = useState(false);
+  const primaryLocationRef = useRef(null);
+  const secondaryLocationRef = useRef(null);
 
-    const isSmallScreen = useMediaQuery("(max-width: 36rem)");
+  const isSmallScreen = useMediaQuery("(max-width: 36rem)");
 
-    // form data
-    const [location, setLocation] = useState("");
-    const [checkInDate, setCheckInDate] = useState(new Date());
-    const [checkOutDate, setCheckOutDate] = useState(new Date());
-    const [numberOfAdults, setNumberOfAdults] = useState(0);
-    const [numberOfChildren, setNumberOfChildren] = useState(0);
+  // form data
+  const [location, setLocation] = useState("");
+  const [checkInDate, setCheckInDate] = useState(new Date());
+  const [checkOutDate, setCheckOutDate] = useState(new Date());
+  const [numberOfAdults, setNumberOfAdults] = useState(0);
+  const [numberOfChildren, setNumberOfChildren] = useState(0);
 
-    const openDatePicker = () => {
-        setInputFocus(true);
-        document.body.style.overflow = "hidden";
-        setTimeout(() => {
-          if (!isSmallScreen && secondaryLocationRef.current) {
-            secondaryLocationRef.current.focus();
-          }
-        }, 10);
+  const openDatePicker = () => {
+    setInputFocus(true);
+    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      if (!isSmallScreen && secondaryLocationRef.current) {
+        secondaryLocationRef.current.focus();
+      }
+    }, 10);
+  };
+
+  const closeDatePicker = () => {
+    setInputFocus(false);
+    setLocation("");
+    setNumberOfChildren(0);
+    setNumberOfAdults(0);
+    setCheckInDate(new Date());
+    setCheckOutDate(new Date());
+    document.body.style.overflow = "initial";
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!location) {
+      primaryLocationRef.current.focus();
+      return;
+    }
+    router.push({
+      path: "/search",
+      query: {
+        location: location,
+        checkIn: checkInDate.toISOString(),
+        checkOut: checkOutDate.toISOString(),
+        guests: numberOfChildren + numberOfAdults,
+      },
+    });
+    setTimeout(() => closeDatePicker(), 100);
+  };
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (!headerRef.current.contains(event.target)) {
+        closeDatePicker();
+      }
     };
 
-    const closeDatePicker = () => {
-        setInputFocus(false);
-        setLocation("");
-        setNumberOfChildren(0);
-        setNumberOfAdults(0);
-        setCheckInDate(new Date());
-        setCheckOutDate(new Date());
-        document.body.style.overflow = "initial";
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     };
+    window.addEventListener("scroll", onScroll);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!location) {
-          primaryLocationRef.current.focus();
-          return;
-        }
-        router.push({
-          path: "/search",
-          query: {
-            location: location,
-            checkIn: checkInDate.toISOString(),
-            checkOut: checkOutDate.toISOString(),
-            guests: numberOfChildren + numberOfAdults,
-          },
-        });
-        setTimeout(() => closeDatePicker(), 100);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-    useEffect(() => {
-        const handleClick = (event) => {
-          if (!headerRef.current.contains(event.target)) {
-            closeDatePicker();
-          }
-        };
-    
-        document.addEventListener("click", handleClick);
-        return () => document.removeEventListener("click", handleClick);
-    }, []);
+  return (
+    <HeaderSection
+      ref={headerRef}
+      className={[
+        scrolled || inputFocus || router !== "scrolled",
+        inputFocus ? "inputFocus" : null,
+      ]}
+    >
+      <div className='headerInner'>
+        <div className="logo" onClick={() => router.push("/")}>
+          <svg
+            viewBox="0 0 256 276"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid"
+          >
+            <path
+              d="M238 223.1a41 41 0 01-46 35c-7-.8-13.8-3-21-7.1-10-5.5-19.8-14-31.4-26.8 18.2-22.3 29.2-42.7 33.4-61 1.9-8.5 2.2-16.2 1.3-23.4a44.7 44.7 0 00-7.4-18.7 46.5 46.5 0 00-38.9-19.6c-16 0-30.3 7.4-38.9 19.6a44.8 44.8 0 00-7.4 18.7 57.3 57.3 0 001.3 23.5c4.2 18.2 15.5 38.9 33.4 61.2A123.8 123.8 0 0185 251.3c-7.2 4.1-14.1 6.3-21 7.1a41 41 0 01-46-35c-.9-6.9-.3-13.8 2.4-21.5.9-2.8 2.2-5.5 3.6-8.8l6.4-13.8.2-.6c19-41 39.5-83 60.7-123.8l.8-1.7 6.7-12.7c2.2-4.4 4.6-8.5 7.7-12a28.8 28.8 0 0144.1 0c3 3.5 5.5 7.6 7.7 12 2.2 4.2 4.4 8.6 6.7 12.7l.8 1.7c21 41 41.4 83 60.4 124.1v.3c2.2 4.4 4.1 9.4 6.3 13.8 1.4 3.3 2.8 6 3.6 8.8 2.2 7.2 3 14 2 21.2zm-110-13c-14.9-18.7-24.6-36.3-27.9-51.2a44.5 44.5 0 01-.8-16.9c.6-4.4 2.2-8.2 4.4-11.5 5.3-7.5 14-12.2 24.3-12.2 10.2 0 19.3 4.4 24.3 12.2 2.2 3.3 3.8 7.1 4.4 11.5.8 5 .5 10.8-.8 16.9-3.4 14.6-13 32.2-27.9 51.3zm124.4-14.3l-4.2-10-6.3-14-.3-.2c-19-41.4-39.4-83.3-61-124.7l-.8-1.7c-2.2-4.1-4.4-8.5-6.6-13-2.7-4.9-5.5-10.1-9.9-15.1a44.5 44.5 0 00-35-17.1C114.5 0 102 6 93 16.6a95 95 0 00-10 15.1l-6.6 13-.8 1.6c-21.2 41.4-42 83.3-61 124.7l-.2.6-6.4 14c-1.4 3-2.7 6.4-4.1 10a58.6 58.6 0 0062 79.4 72.8 72.8 0 0027.6-9.4c11.3-6.3 22-15.4 34.2-28.7a144.9 144.9 0 0034.2 28.7 72.9 72.9 0 0034.8 10 58.5 58.5 0 0058.2-50.2 52.1 52.1 0 00-2.5-29.6z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>airbnb</span>
+        </div>
+        <nav ref={navRef}>
+          <a href="#" className="active">
+            Nơi ở
+          </a>
+          <a href="#">Trải nghiệm</a>
+          <a href="#">Trải nghiệm trực tuyến</a>
+        </nav>
+        {/* <MobileNav/> */}
+        <form className="search">
+          <input
+            type="text"
+            ref={primaryLocationRef}
+            placeholder={placeholder ? placeholder : "Bạn muốn đi đâu ?"}
+            onFocus={openDatePicker}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            required
+          />
 
-    useEffect(() => {
-        const onScroll = () => {
-          if (window.scrollY > 10) {
-            setScrolled(true);
-          } else {
-            setScrolled(false);
-          }
-        };
-        window.addEventListener("scroll", onScroll);
-    
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+          {inputFocus && (
+            <div className="overlay">
+              <div className="field">
+                <label htmlFor="location">Địa điểm</label>
+                <input
+                  id="location"
+                  value={location}
+                  ref={secondaryLocationRef}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Bạn sắp đi đâu ?"
+                />
+              </div>
 
-    return (
-        <HeaderSection
-        ref={headerRef}
-        className={[
-          scrolled || inputFocus || router !== "scrolled",
-          inputFocus ? "inputFocus" : null,
-        ]}
-        >
-            <div className='headerInner'>
-                <div className="logo" onClick={() => router.push("/")}>
-                    <svg
-                        viewBox="0 0 256 276"
-                        xmlns="http://www.w3.org/2000/svg"
-                        preserveAspectRatio="xMidYMid"
-                    >
-                        <path
-                        d="M238 223.1a41 41 0 01-46 35c-7-.8-13.8-3-21-7.1-10-5.5-19.8-14-31.4-26.8 18.2-22.3 29.2-42.7 33.4-61 1.9-8.5 2.2-16.2 1.3-23.4a44.7 44.7 0 00-7.4-18.7 46.5 46.5 0 00-38.9-19.6c-16 0-30.3 7.4-38.9 19.6a44.8 44.8 0 00-7.4 18.7 57.3 57.3 0 001.3 23.5c4.2 18.2 15.5 38.9 33.4 61.2A123.8 123.8 0 0185 251.3c-7.2 4.1-14.1 6.3-21 7.1a41 41 0 01-46-35c-.9-6.9-.3-13.8 2.4-21.5.9-2.8 2.2-5.5 3.6-8.8l6.4-13.8.2-.6c19-41 39.5-83 60.7-123.8l.8-1.7 6.7-12.7c2.2-4.4 4.6-8.5 7.7-12a28.8 28.8 0 0144.1 0c3 3.5 5.5 7.6 7.7 12 2.2 4.2 4.4 8.6 6.7 12.7l.8 1.7c21 41 41.4 83 60.4 124.1v.3c2.2 4.4 4.1 9.4 6.3 13.8 1.4 3.3 2.8 6 3.6 8.8 2.2 7.2 3 14 2 21.2zm-110-13c-14.9-18.7-24.6-36.3-27.9-51.2a44.5 44.5 0 01-.8-16.9c.6-4.4 2.2-8.2 4.4-11.5 5.3-7.5 14-12.2 24.3-12.2 10.2 0 19.3 4.4 24.3 12.2 2.2 3.3 3.8 7.1 4.4 11.5.8 5 .5 10.8-.8 16.9-3.4 14.6-13 32.2-27.9 51.3zm124.4-14.3l-4.2-10-6.3-14-.3-.2c-19-41.4-39.4-83.3-61-124.7l-.8-1.7c-2.2-4.1-4.4-8.5-6.6-13-2.7-4.9-5.5-10.1-9.9-15.1a44.5 44.5 0 00-35-17.1C114.5 0 102 6 93 16.6a95 95 0 00-10 15.1l-6.6 13-.8 1.6c-21.2 41.4-42 83.3-61 124.7l-.2.6-6.4 14c-1.4 3-2.7 6.4-4.1 10a58.6 58.6 0 0062 79.4 72.8 72.8 0 0027.6-9.4c11.3-6.3 22-15.4 34.2-28.7a144.9 144.9 0 0034.2 28.7 72.9 72.9 0 0034.8 10 58.5 58.5 0 0058.2-50.2 52.1 52.1 0 00-2.5-29.6z"
-                        fill="currentColor"
-                        />
-                    </svg>
-                    <span>airbnb</span>
-                </div>
-                <nav ref={navRef}>
-                    <a href="#" className="active">
-                        Nơi ở
-                    </a>
-                    <a href="#">Trải nghiệm</a>
-                    <a href="#">Trải nghiệm trực tuyến</a>
-                </nav>
-                {/* <MobileNav/> */}
-                <form className="search">
-                    <input 
-                        type="text" 
-                        ref={primaryLocationRef}
-                        placeholder={placeholder ? placeholder : "Bạn muốn đi đâu ?"}
-                        onFocus={openDatePicker}
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        required
-                    />
+              <div className="field">
+                <label>Nhận phòng</label>
+                <input disabled placeholder="Thêm ngày" value={checkInDate} />
+              </div>
 
-                    {inputFocus && (
-                        <div className="overlay">
-                            <div className="field">
-                                <label htmlFor="location">Địa điểm</label>
-                                <input
-                                    id="location"
-                                    value={location}
-                                    ref={secondaryLocationRef}
-                                    onChange={(e)=>setLocation(e.target.value)}
-                                    placeholder="Bạn sắp đi đâu ?"
-                                />
-                            </div>
+              <div className="field">
+                <label>Trả phòng</label>
+                <input disabled placeholder="Thêm ngày" value={checkOutDate} />
+              </div>
 
-                            <div className="field">
-                                <label>Nhận phòng</label>
-                                <input disabled placeholder="Thêm ngày" value={checkInDate} />
-                            </div>
-
-                            <div className="field">
-                                <label>Trả phòng</label>
-                                <input disabled placeholder="Thêm ngày" value={checkOutDate} />
-                            </div>
-
-                            <div className="field">
-                                <label>Khách</label>
-                                <span className="guestNumber">
-                                    {numberOfChildren || numberOfAdults ? (
-                                    <p>{numberOfAdults + numberOfChildren} khách</p>
-                                ) : (
-                                    <p className="empty">Thêm khách</p>
-                                )}
-                                </span>
-                            </div>
-                        </div>
-                    )}
-                    <button
-                        type="submit"
-                        disabled={
-                            inputFocus &&
-                            !(
-                                location &&
-                                checkInDate &&
-                                checkOutDate &&
-                                (numberOfAdults || numberOfChildren)
-                            )
-                        }
-                        onClick={handleSubmit}
-                        aria-label="search places"
-                    >
-                        <Search/>
-                        <span>Tìm kiếm</span>
-                    </button>
-                </form>
-                {inputFocus && (
-                    <DatePicker
-                    className="datepicker"
-                    close={closeDatePicker}
-                    checkInDate={{ value: checkInDate, setValue: setCheckInDate }}
-                    checkOutDate={{ value: checkOutDate, setValue: setCheckOutDate }}
-                    numberOfAdults={{
-                      value: numberOfAdults,
-                      setValue: setNumberOfAdults,
-                    }}
-                    numberOfChildren={{
-                      value: numberOfChildren,
-                      setValue: setNumberOfChildren,
-                    }}
-                  />
-                )}
-
-                <div className="profile">
-                    <a href="#">Trở thành chủ nhà</a>
-                    <ThemeToggle icon />
-                    <a href="#" className="globe">
-                        <Globe />
-                    </a>
-                    <div className="user">
-                        <Menu className="menu" />
-                        <User className="userIcon" />
-                    </div>
-                </div>
+              <div className="field">
+                <label>Khách</label>
+                <span className="guestNumber">
+                  {numberOfChildren || numberOfAdults ? (
+                    <p>{numberOfAdults + numberOfChildren} khách</p>
+                  ) : (
+                    <p className="empty">Thêm khách</p>
+                  )}
+                </span>
+              </div>
             </div>
-        </HeaderSection>
-        
-    )
+          )}
+          <button
+            type="submit"
+            disabled={
+              inputFocus &&
+              !(
+                location &&
+                checkInDate &&
+                checkOutDate &&
+                (numberOfAdults || numberOfChildren)
+              )
+            }
+            onClick={handleSubmit}
+            aria-label="search places"
+          >
+            <Search />
+            <span>Tìm kiếm</span>
+          </button>
+        </form>
+        {inputFocus && (
+          <DatePicker
+            className="datepicker"
+            close={closeDatePicker}
+            checkInDate={{ value: checkInDate, setValue: setCheckInDate }}
+            checkOutDate={{ value: checkOutDate, setValue: setCheckOutDate }}
+            numberOfAdults={{
+              value: numberOfAdults,
+              setValue: setNumberOfAdults,
+            }}
+            numberOfChildren={{
+              value: numberOfChildren,
+              setValue: setNumberOfChildren,
+            }}
+          />
+        )}
+
+        <div className="profile">
+          <a href="#">Trở thành chủ nhà</a>
+          <ThemeToggle icon />
+          <a href="#" className="globe">
+            <Globe />
+          </a>
+          <div className="user">
+            <LoginRegisterMenu>
+              <Menu className="menu" />
+              <User className="userIcon" />
+            </LoginRegisterMenu>
+          </div>
+        </div>
+      </div>
+    </HeaderSection>
+
+  )
 }
 
 const HeaderSection = styled.header`

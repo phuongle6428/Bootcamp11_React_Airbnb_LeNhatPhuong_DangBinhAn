@@ -31,7 +31,7 @@ function App() {
 
       <Router>
         <Switch>
-          <Route exact path={["/", "/search"]}>
+          <Route exact path={["/", "/search", "/login", "/register"]}>
             <Header />
             <Switch>
               <Route path="/search">
@@ -39,22 +39,27 @@ function App() {
               </Route>
               <Route path="/">
                 <HomePage />
+                <Switch>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                  <Route path="/register">
+                    <Register />
+                  </Route>
+                </Switch>
               </Route>
             </Switch>
             <Footer />
           </Route>
-          <Route path="/login">
+          {/* <Route path="/login">
             <Login />
           </Route>
           <Route path="/register">
             <Register />
-          </Route>
+          </Route> */}
           <UserPath path="/user/profile">
             <Profile />
           </UserPath>
-          {/* <Route path="/user/profile">
-          <Profile />
-        </Route> */}
         </Switch>
       </Router>
     </>

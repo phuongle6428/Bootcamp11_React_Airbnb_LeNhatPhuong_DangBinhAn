@@ -10,7 +10,7 @@ import { login } from '../actions/auth';
 import { useHistory } from 'react-router';
 import { Inbox, AccountBox, VpnKey } from '@material-ui/icons';
 import { InputGroup, Modal } from 'react-bootstrap';
-import ModalLR from './ModalLR';
+import ModalLR from '../components/ModalLR';
 const schema = yup.object({
   email: yup.string().required("Tài khoản không được để trống"),
   password: yup.string().required("Mật khẩu không được để trống"),

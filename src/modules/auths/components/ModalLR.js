@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap';
-import images from "./../../../image/images.png";
-import anh from "./../../../image/anh.png";
+import { useHistory } from 'react-router';
 import styles from "./../styles/styles.module.css";
 export default function ModalLR(props) {
+  const history = useHistory()
+  const handleClose = () => {
+    history.push("/")
+  };
   return (
     <>
       <Modal
         show
         size="lg"
+        onHide={handleClose}
         backdrop="static"
         contentClassName={styles.modalWidth}
         keyboard={false}>
@@ -20,8 +24,6 @@ export default function ModalLR(props) {
           </div>
       </div>
       </Modal>
-
     </>
-
   )
 }
