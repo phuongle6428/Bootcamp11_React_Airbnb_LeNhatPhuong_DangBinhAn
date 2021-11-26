@@ -6,9 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import TextField from "@material-ui/core/TextField";
 import { register } from "../actions/auth";
-
+import { Modal } from "react-bootstrap";
+import { Inbox, AccountBox, VpnKey, Help, DateRange, Home, PhoneAndroid, KeyboardReturn, PermIdentity } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
+import ModalLR from "./ModalLR";
 const schema = yup.object().shape({
   address: yup.string().required("Địa chỉ không được để trống"),
+  gender: yup.string().required("Giới Tính không được để trống"),
+  birdthday: yup.string().required("Ngày sinh không được để trống"),
   password: yup
     .string()
     .required("Mật khẩu không được để trống")
@@ -53,97 +58,156 @@ export default function Register() {
   console.log("re-render")
   return (
     <>
-      <div>ĐĂNG KÝ</div>
-      {console.log(errors, "errors")}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Tài khoản */}
-        <div>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Tài Khoản"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-              />
-            )}
-          />
-        </div>
-
-        {/* Mật khẩu */}
-        <div>
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type="password"
-                label="Mật khẩu"
-                error={!!errors.password}
-                helperText={errors.password?.message}
-              />
-            )}
-          />
-        </div>
-        <div>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field, fieldState }) => {
-              { console.log(field, "name") }
-              { console.log(fieldState, "fieldState") }
-              return (
-                <TextField
-                  {...field}
-                  label="Họ Tên"
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                />
-              )
-            }}
-          />
-        </div>
-
-        <div>
-          <Controller
-            name="hoTen"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Họ Tên"
-                error={!!errors.hoTen}
-                helperText={errors.hoTen?.message}
-              />
-            )}
-          />
-        </div>
-
-        <div>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Số điện thoại"
-                error={!!errors.phone}
-                helperText={errors.phone?.message}
-              />
-            )}
-          />
-        </div>
-
-        {error && <p>{error}</p>}
-
-        <button disabled={isLoading}>Đăng ký</button>
-        <button onClick={(e) => {
-          e.preventDefault(); history.push("/login")
-        }} disabled={isLoading}>Đăng nhập</button>
-      </form>
+      <ModalLR>
+          <Modal.Header closeButton>
+            <Modal.Title>ĐĂNG KÝ</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={handleSubmit(onSubmit)} id="registerform" className="d-flex flex-column align-items-center">
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><AccountBox /></div>
+                  <Controller
+                    name="email"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        label="Tài Khoản"
+                        error={!!errors.email}
+                        helperText={errors.email?.message}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><VpnKey /></div>
+                  <Controller
+                    name="password"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        type="password"
+                        label="Mật khẩu"
+                        error={!!errors.password}
+                        helperText={errors.password?.message}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><PermIdentity /></div>
+                  <Controller
+                    name="name"
+                    control={control}
+                    render={({ field, fieldState }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          label="Họ Tên"
+                          error={!!errors.name}
+                          helperText={errors.name?.message}
+                        />
+                      )
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><Help /></div>
+                  <Controller
+                    name="gender"
+                    control={control}
+                    render={({ field, fieldState }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          label="Giới Tính"
+                          error={!!errors.gender}
+                          helperText={errors.gender?.message}
+                        />
+                      )
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><DateRange /></div>
+                  <Controller
+                    name="birthday"
+                    control={control}
+                    render={({ field, fieldState }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          label="Ngày Sinh"
+                          error={!!errors.birthday}
+                          helperText={errors.birthday?.message}
+                        />
+                      )
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><Home /></div>
+                  <Controller
+                    name="address"
+                    control={control}
+                    render={({ field, fieldState }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          label="Địa chỉ"
+                          error={!!errors.address}
+                          helperText={errors.address?.message}
+                        />
+                      )
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="d-flex align-items-baseline">
+                  <div><PhoneAndroid /></div>
+                  <Controller
+                    name="phone"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        label="Số điện thoại"
+                        error={!!errors.phone}
+                        helperText={errors.phone?.message}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+              {error && <div>{error}</div>}
+            </form>
+          </Modal.Body>
+          <Modal.Footer className="justify-content-center" >
+            <div className="mr-2">
+              <Button variant="contained" color="primary" endIcon={<Inbox />} type="submit" disabled={isLoading} form="registerform">
+                Đăng ký
+              </Button>
+            </div>
+            <Button variant="contained" color="primary" endIcon={<KeyboardReturn />} type="submit" disabled={isLoading} onClick={(e) => {
+              e.preventDefault(); history.push("/login")
+            }}>
+              Trở lại
+            </Button>
+          </Modal.Footer>
+      </ModalLR>
     </>
   );
 }
